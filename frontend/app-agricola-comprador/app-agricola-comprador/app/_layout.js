@@ -5,7 +5,10 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 export default function RootLayout() {
     return (
         <GluestackUIProvider mode="system">
-            <Stack />
+            <Stack>
+                <Stack.Screen name="index" options={{ title: "Produtos" }} />
+                <Stack.Screen name="product/[id]" options={{ title: "Detalhes" }} />
+            </Stack>
         </GluestackUIProvider>
     );
 }

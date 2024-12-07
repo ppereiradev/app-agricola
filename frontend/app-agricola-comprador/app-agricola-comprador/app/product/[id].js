@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 import products from "@/assets/product.json";
 
@@ -22,6 +22,7 @@ export default function ProductDetailsScreen() {
     }
     return (
         <Card className="p-5 rounded-lg flex-1">
+            <Stack.Screen options={{ title: `${product.name}` }} />
             <Image
                 source={{
                 uri: product.image,
