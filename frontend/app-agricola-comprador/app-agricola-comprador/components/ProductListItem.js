@@ -1,9 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { VStack } from "@/components/ui/vstack";
-import { Box } from "@/components/ui/box";
 import { Heading } from "@/components/ui/heading";
-import { Button, ButtonText } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import { Link } from "expo-router";
 import { Pressable } from "react-native";
