@@ -1,4 +1,5 @@
 FROM node:22
+LABEL maintainer="ppereira.dev"
 
 RUN apt-get update && apt-get install -y \
   watchman \
@@ -13,8 +14,7 @@ COPY ./app-agricola-comprador /home/app-agricola-comprador
 
 WORKDIR /home/app-agricola-comprador
 
-# COPY package*.json ./
-# RUN npm install
+RUN npm install
 
 EXPOSE 19000 19001 19002 8081 8082
 

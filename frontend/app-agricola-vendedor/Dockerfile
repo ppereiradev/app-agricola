@@ -1,4 +1,5 @@
 FROM node:22
+LABEL maintainer="ppereira.dev"
 
 RUN apt-get update && apt-get install -y \
   watchman \

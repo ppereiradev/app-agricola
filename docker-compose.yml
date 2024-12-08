@@ -4,6 +4,7 @@ services:
     stdin_open: true
     tty: true
     command: bash
+    container_name: app-agricola-comprador
     build:
       context: ./frontend/app-agricola-comprador
     ports:
@@ -19,6 +20,7 @@ services:
   #   stdin_open: true
   #   tty: true
   #   command: bash
+  #   container_name: app-agricola-vendedor
   #   build:
   #     context: ./frontend/app-agricola-vendedor
   #   ports:
@@ -30,13 +32,14 @@ services:
   #   volumes:
   #     - ./frontend/app-agricola-vendedor/app-agricola-vendedor:/home/app-agricola-vendedor
 
-  # backend:
-  #   stdin_open: true
-  #   tty: true
-  #   command: bash
-  #   build:
-  #     context: ./backend
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./backend/app-agricola/:/home/app-agricola
+  app-agricola-backend:
+    stdin_open: true
+    tty: true
+    command: bash
+    container_name: app-agricola-backend
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app-agricola-backend/:/home/app-agricola-backend

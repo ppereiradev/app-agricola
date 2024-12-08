@@ -1,11 +1,19 @@
-FROM maven:3.9.9-amazoncorretto-23
+FROM python:3.13-bullseye
+LABEL maintainer="ppereira.dev"
 
-LABEL maintainer="paulopereira.dev"
+ARG DEBIAN_FRONTEND=noninteractive
+ARG UID
 
-EXPOSE 8080
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /home/
+EXPOSE 8000
 
-COPY ./ /home/
+RUN mkdir -p /home/app-agricola-backend
 
-WORKDIR /home/
+COPY ./app-agricola-backend /home/app-agricola-backend
+
+RUN pip install --upgrade pip && \
+    pip install -r /home/app-agricola-backend/requirements.txt
+
+WORKDIR /home/app-agricola-backend/app
