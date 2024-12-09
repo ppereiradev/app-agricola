@@ -30,6 +30,10 @@ export default function ProductDetailsScreen() {
         addProduct(product);
     }
 
+    const productIndex = items.findIndex(item =>
+        JSON.stringify(item.product) === JSON.stringify(product)
+    );
+
     if(isLoading) {
     return <ActivityIndicator />;
     }
@@ -58,7 +62,7 @@ export default function ProductDetailsScreen() {
                 {product.name}
             </Text>
             <Text className="text-sm font-normal mb-2 text-typography-700">
-                {product.seller}
+                Quantidade: {productIndex != -1 ? items[productIndex].quantity : 0}
             </Text>
             <VStack className="mb-6">
                 <Heading size="md" className="mb-4">

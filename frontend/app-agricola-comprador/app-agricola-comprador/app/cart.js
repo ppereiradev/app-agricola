@@ -13,8 +13,6 @@ export default function CartScreen() {
 
   const items = useCart((state) => state.items);
   const resetCart = useCart((state) => state.resetCart);
-  const numberCartItems = items.reduce((total, item) => total + item.quantity, 0);
-
 
   const checkout = async () => {
     resetCart();
@@ -29,8 +27,13 @@ export default function CartScreen() {
         renderItem={({ item }) => (
           <HStack className="bg-white p-3">
             <VStack space="sm">
-              <Text bold>{item.product.name}</Text>
-              <Text>R$ {item.product.price.replace(".",",")}</Text>
+              <Text bold className="text-lg">{item.product.name}</Text>
+              <Text bold>R$ {
+                  (Math.round((
+                    Number(item.product.price) * Number(item.quantity)
+                  ) * 100) / 100).toFixed(2).replace(".",",")
+                }</Text>
+              <Text className="text-sm">Un.: R$ {item.product.price.replace(".",",")}</Text>
             </VStack>
             <Text className="ml-auto">{item.quantity}</Text>
           </HStack>

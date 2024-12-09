@@ -13,7 +13,7 @@ const queryClient = new QueryClient()
 export default function RootLayout() {
 
     const items = useCart((state) => state.items);
-    const numberCartItems = items.reduce((total, item) => total + item.quantity, 0);
+    const numberCartItems = items.length;
 
     return (
         <QueryClientProvider client={queryClient}>
