@@ -13,14 +13,22 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useQuery } from '@tanstack/react-query';
 
 import { getProductById } from '@/api/products';
+import { useCart } from '@/store/cartStore';
 
 export default function ProductDetailsScreen() {
 
     const {id} = useLocalSearchParams();
+    const addProduct = useCart((state) => state.addProduct);
+    const items = useCart((state) => state.items);
+
     const { data:product, isLoading, error } = useQuery({
         queryKey: ["product", id],
         queryFn: () => getProductById(id),
-      });
+    });
+
+    const addToCart = () => {
+        addProduct(product);
+    }
 
     if(isLoading) {
     return <ActivityIndicator />;
@@ -29,7 +37,6 @@ export default function ProductDetailsScreen() {
     if(error){
     return <Text>Erro ao buscar produto!</Text>;
     }
-
 
     if(!product){
         return (
@@ -62,7 +69,7 @@ export default function ProductDetailsScreen() {
                 </Text>
             </VStack>
             <Box className="flex-col sm:flex-row">
-                <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
+                <Button onPress={addToCart} className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
                 <ButtonText size="sm">Adicionar ao carrinho</ButtonText>
                 </Button>
             </Box>
