@@ -21,13 +21,21 @@ export default function RootLayout() {
                 <Stack
                     screenOptions={{
                         headerRight: () => (
-                            <Link href={"/cart"} asChild>
-                                <Pressable className="flex-row gap-2 mr-5">
-                                    <Feather name="shopping-cart" size={24} color="black" />
-                                    <Text>{numberCartItems}</Text>
-                                </Pressable>
-                            </Link>
-                        )
+                            <>
+                                <Link href={"/login"} asChild>
+                                    <Pressable className="mr-5">
+                                        <Feather name="user" size={24} color="black" />
+                                    </Pressable>
+                                </Link>
+
+                                <Link href={"/cart"} asChild>
+                                    <Pressable className="flex-row gap-2 mr-5">
+                                        <Feather name="shopping-cart" size={24} color="black" />
+                                        <Text>{numberCartItems}</Text>
+                                    </Pressable>
+                                </Link>
+                            </>
+                        ),
                     }}
                 >
                     <Stack.Screen name="index" options={{ title: "Produtos" }} />
