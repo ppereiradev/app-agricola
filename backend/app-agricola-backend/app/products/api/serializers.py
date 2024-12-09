@@ -4,7 +4,10 @@ from users.api.serializers import UserSerializer
 from users.models import User
 
 class ProductSerializer(serializers.ModelSerializer):
-    seller = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    seller = serializers.SlugRelatedField(
+                                            read_only=True,
+                                            slug_field='first_name'
+                                        )
 
     class Meta:
         model = Product

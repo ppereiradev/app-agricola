@@ -43,3 +43,18 @@ services:
       - "8000:8000"
     volumes:
       - ./backend/app-agricola-backend/:/home/app-agricola-backend
+
+
+  app-agricola-db:
+    stdin_open: true
+    tty: true
+    command: bash
+    container_name: app-agricola-db
+    build:
+      context: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpassword"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/:/home/app-agricola-db

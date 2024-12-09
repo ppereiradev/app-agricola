@@ -23,7 +23,7 @@ export default function ProductListItem(props) {
                         {props.product.name}
                     </Text>
                     <Heading size="md" className="mb-4">
-                        R$ {props.product.price}
+                        R$ {props.product.price.replace('.', ',')}
                     </Heading>
                 </Card>
             </Pressable>

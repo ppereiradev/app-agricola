@@ -1,3 +1,5 @@
+import { ActivityIndicator } from 'react-native';
+
 import { Text } from "@/components/ui/text";
 import { Card } from "@/components/ui/card";
 import { VStack } from "@/components/ui/vstack";
@@ -8,12 +10,26 @@ import { Image } from "@/components/ui/image";
 
 import { Stack, useLocalSearchParams } from "expo-router";
 
-import products from "@/assets/product.json";
+import { useQuery } from '@tanstack/react-query';
+
+import { getProductById } from '@/api/products';
 
 export default function ProductDetailsScreen() {
 
     const {id} = useLocalSearchParams();
-    const product = products.find((p) => p.id == id);
+    const { data:product, isLoading, error } = useQuery({
+        queryKey: ["product", id],
+        queryFn: () => getProductById(id),
+      });
+
+    if(isLoading) {
+    return <ActivityIndicator />;
+    }
+
+    if(error){
+    return <Text>Erro ao buscar produto!</Text>;
+    }
+
 
     if(!product){
         return (
@@ -31,12 +47,15 @@ export default function ProductDetailsScreen() {
                 alt="image"
                 resizeMode="contain"
             />
-            <Text className="text-sm font-normal mb-2 text-typography-700">
+            <Text className="text-lg font-normal mb-2 text-typography-700">
                 {product.name}
+            </Text>
+            <Text className="text-sm font-normal mb-2 text-typography-700">
+                {product.seller}
             </Text>
             <VStack className="mb-6">
                 <Heading size="md" className="mb-4">
-                R$ {product.price}
+                R$ {product.price.replace('.', ',')}
                 </Heading>
                 <Text size="sm">
                 {product.description}
@@ -44,15 +63,7 @@ export default function ProductDetailsScreen() {
             </VStack>
             <Box className="flex-col sm:flex-row">
                 <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
-                <ButtonText size="sm">Add to cart</ButtonText>
-                </Button>
-                <Button
-                variant="outline"
-                className="px-4 py-2 border-outline-300 sm:flex-1"
-                >
-                <ButtonText size="sm" className="text-typography-600">
-                    Wishlist
-                </ButtonText>
+                <ButtonText size="sm">Adicionar ao carrinho</ButtonText>
                 </Button>
             </Box>
         </Card>
