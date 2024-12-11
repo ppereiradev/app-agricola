@@ -13,11 +13,14 @@ import { useAuth } from '@/store/authStore';
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 
+import { getUserByUsername } from '@/api/users';
+
 
 export default function LoginScreen() {
 
     const user = useAuth((state) => state.user);
     const setUser = useAuth((state) => state.setUser);
+    const setUsername = useAuth((state) => state.setUsername);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,17 +29,17 @@ export default function LoginScreen() {
         }
     }, [user]);
 
-    const [email, setEmail] = useState();
+    const [usernameInput, setUsernameInput] = useState();
 
-    const handelChangeEmail = function(event) {
-        setEmail(event.target.value)
+    const handelChangeUsername = function(event) {
+        setUsernameInput(event.target.value);
       }
 
 
-    const login = () => {
-        setUser(email);
-        router.replace("/");
-    }
+    const login = async () => {
+        setUsername(usernameInput);
+        router.replace("/")
+    };
 
     const [showPassword, setShowPassword] = useState(false);
     const handleState = () => {
@@ -57,18 +60,18 @@ export default function LoginScreen() {
                 </Heading>
                 <VStack space='xs'>
                     <Text className='text-typography-500 leading-1'>
-                    Email
+                    Username
                     </Text>
                     <Input>
                     <InputField
                         type="text"
-                        onChange={handelChangeEmail}
+                        onChange={handelChangeUsername}
                     />
                     </Input>
                 </VStack>
                 <VStack space='xs'>
                     <Text className='text-typography-500 leading-1'>
-                    Password
+                    Senha
                     </Text>
                     <Input className='text-center'>
                     <InputField

@@ -5,20 +5,35 @@ import products from '@/assets/product.json';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProducts } from '@/api/products';
+import { getUserByUsername } from '@/api/users';
 
+import { useAuth } from '@/store/authStore';
 
 export default function HomeScreen() {
 
-  const { data, isLoading, error } = useQuery({
+  const username = useAuth((state) => state.username);
+  const setUser = useAuth((state) => state.setUser);
+
+  const { data:dataProduct, isLoading:isLoadingProduct, error:errorProduct } = useQuery({
     queryKey: ["product"],
     queryFn: getProducts,
   });
 
-  if(isLoading) {
+  const { data:dataUser, isLoading:isLoadingUser, error:errorUser } = useQuery({
+    queryKey: ["username", username],
+    queryFn: () => getUserByUsername(username),
+  });
+
+
+  if(dataUser){
+    setUser(dataUser);
+  }
+
+  if(isLoadingProduct) {
     return <ActivityIndicator />;
   }
 
-  if(error){
+  if(errorProduct){
     return <Text>Erro ao buscar produtos!</Text>;
   }
 
@@ -27,7 +42,7 @@ export default function HomeScreen() {
         className="p-2"
         contentContainerClassName="gap-2"
         columnWrapperClassName="gap-2"
-        data={data}
+        data={dataProduct}
         renderItem={({item}) => <ProductListItem product={item} />}
         numColumns={2}
       />
