@@ -9,10 +9,24 @@ import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Button, ButtonText } from '@/components/ui/button';
 
 import Feather from '@expo/vector-icons/Feather';
-
+import { useAuth } from '@/store/authStore';
+import { useRouter } from "expo-router";
 
 
 export default function LoginScreen() {
+
+    const setUser = useAuth((state) => state.setUser);
+    const [email, setEmail] = useState();
+    const router = useRouter();
+
+    const handelChangeEmail = function(event) {
+        setEmail(event.target.value)
+      }
+
+    const login = () => {
+        setUser(email);
+        router.replace("/");
+    }
 
     const [showPassword, setShowPassword] = useState(false);
     const handleState = () => {
@@ -38,6 +52,7 @@ export default function LoginScreen() {
                     <Input>
                     <InputField
                         type="text"
+                        onChange={handelChangeEmail}
                     />
                     </Input>
                 </VStack>
@@ -62,6 +77,7 @@ export default function LoginScreen() {
                 </VStack>
                 <Button
                     className='ml-auto'
+                    onPress={login}
                 >
                     <ButtonText className='text-typography-0'>
                     Entrar

@@ -8,11 +8,24 @@ import { Box } from '@/components/ui/box';
 import { View, FlatList, Alert } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
 
+import { useEffect } from "react";
+import { useAuth } from '@/store/authStore';
+import { useRouter } from "expo-router";
+
 
 export default function CartScreen() {
 
   const items = useCart((state) => state.items);
   const resetCart = useCart((state) => state.resetCart);
+  const user = useAuth((state) => state.user);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user == null) {
+        router.replace("login");
+    }
+  }, [user]);
+
 
   const checkout = async () => {
     resetCart();

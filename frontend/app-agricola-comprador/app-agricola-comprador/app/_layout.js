@@ -5,7 +5,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Pressable } from "react-native";
 import { Text } from '@/components/ui/text';
 import { useCart } from '@/store/cartStore';
+import { useAuth } from '@/store/authStore';
 import Feather from '@expo/vector-icons/Feather';
+
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -13,7 +17,15 @@ const queryClient = new QueryClient()
 export default function RootLayout() {
 
     const items = useCart((state) => state.items);
+    const user = useAuth((state) => state.user);
+    const router = useRouter();
     const numberCartItems = items.length;
+
+    useEffect(() => {
+        if (user == null) {
+            router.replace("login");
+        }
+    }, [user]);
 
     return (
         <QueryClientProvider client={queryClient}>
