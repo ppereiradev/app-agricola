@@ -2,6 +2,7 @@ FROM mariadb:11-ubi9
 LABEL maintainer="ppereira.dev"
 
 EXPOSE 3306
+USER root
 
 RUN mkdir -p /home/app-agricola-db
 

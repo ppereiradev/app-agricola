@@ -11,17 +11,27 @@ import { Button, ButtonText } from '@/components/ui/button';
 import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '@/store/authStore';
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 
 
 export default function LoginScreen() {
 
+    const user = useAuth((state) => state.user);
     const setUser = useAuth((state) => state.setUser);
-    const [email, setEmail] = useState();
     const router = useRouter();
+
+    useEffect(() => {
+        if (user != null) {
+            router.replace("/");
+        }
+    }, [user]);
+
+    const [email, setEmail] = useState();
 
     const handelChangeEmail = function(event) {
         setEmail(event.target.value)
       }
+
 
     const login = () => {
         setUser(email);

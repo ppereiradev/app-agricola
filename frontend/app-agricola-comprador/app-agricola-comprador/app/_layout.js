@@ -23,7 +23,9 @@ export default function RootLayout() {
 
     useEffect(() => {
         if (user == null) {
-            router.replace("login");
+            router.replace("/login");
+        } else {
+            router.replace("/");
         }
     }, [user]);
 

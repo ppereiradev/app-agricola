@@ -57,4 +57,4 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./db/:/home/app-agricola-db
+      - ./db:/home/app-agricola-db

@@ -22,7 +22,7 @@ export default function CartScreen() {
 
   useEffect(() => {
     if (user == null) {
-        router.replace("login");
+        router.replace("/login");
     }
   }, [user]);
 
